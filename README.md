@@ -21,7 +21,10 @@ Creat an account and fallow nessesory steps for setup `https://dashboard.ngrok.c
 npm install -g truffle
 
  truffle complile
-  truffle migrate ```
+  truffle migrate 
+  
+  ```
+
 
 ## If you want to access the QR code or if you want to access the application on web
 
