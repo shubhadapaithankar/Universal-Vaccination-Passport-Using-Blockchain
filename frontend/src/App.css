@@ -24,8 +24,6 @@
   color: black !important;
 }
 
-
-
 .App-link {
   color: #61dafb;
 }
@@ -36,5 +34,17 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.navBarTitle {
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+
+@media only screen and (max-width: 500px) {
+  .navBarTitle {
+    display: none;
   }
 }
