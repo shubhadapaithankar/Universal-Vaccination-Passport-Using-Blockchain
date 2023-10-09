@@ -1,13 +1,13 @@
 # Universal-Vaccination-Passport-Using-Blockchain
 Universal Vaccination Passport Using Blockchain
 
-## Required installation befor starting the app.
+## Required installation before starting the app.
 
 1. Install Blockchain  `https://trufflesuite.com/ganache/`
 2. Install ` https://www.postman.com/downloads/`
 3. Install for network tunneling `https://ngrok.com/download` 
 
-Creat an account and fallow nessesory steps for setup `https://dashboard.ngrok.com/get-started/setup`
+Create an account and follow the necessary steps for setup `https://dashboard.ngrok.com/get-started/setup`
 
 4. run server on 3000 port ` ngrok http 3000`
 
@@ -15,7 +15,7 @@ Creat an account and fallow nessesory steps for setup `https://dashboard.ngrok.c
 ## clone the repo 
 1. Start backend `cd backend`  `npm install` 'npm start`
 2. Start front end `cd frontend` 'npm install` 'npm start`
-3. start block chain 
+3. start blockchain 
 
 ```
 npm install -g truffle
