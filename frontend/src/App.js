@@ -1,6 +1,7 @@
 import "./App.css";
 import Appbar from "./components/Appbar";
 import HospitalLogin from "./components/HospitalLogin";
+import UploadCSV from "./components/UploadCSV";
 import Vaccination from "./components/Vaccination";
 import backimage from "./images/back.jpg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -8,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div
-      class="bg_image"
+      className="bg_image"
       style={{
         backgroundImage: "url(" + backimage + ")",
         backgroundSize: "cover",
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Vaccination />} />
           <Route path="/hospitalLogin" element={<HospitalLogin />} />
+          <Route path="/uploadCSV" element={<UploadCSV />} />
         </Routes>
       </Router>
     </div>

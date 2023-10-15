@@ -24,7 +24,7 @@ export default function Appbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="#f5f5f5">
+      <AppBar position="static" color="default">
         <Toolbar>
           <IconButton
             edge="start"
