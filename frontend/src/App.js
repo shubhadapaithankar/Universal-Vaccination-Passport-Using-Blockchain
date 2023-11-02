@@ -1,6 +1,7 @@
 import "./App.css";
 import Appbar from "./components/Appbar";
 import HospitalLogin from "./components/HospitalLogin";
+import HospitalRegistration from "./components/HospitalRegistration";
 import UploadCSV from "./components/UploadCSV";
 import Vaccination from "./components/Vaccination";
 import backimage from "./images/back.jpg";
@@ -25,6 +26,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Vaccination />} />
           <Route path="/hospitalLogin" element={<HospitalLogin />} />
+          <Route
+            path="/hospitalRegistration"
+            element={<HospitalRegistration />}
+          />
           <Route path="/uploadCSV" element={<UploadCSV />} />
         </Routes>
       </Router>

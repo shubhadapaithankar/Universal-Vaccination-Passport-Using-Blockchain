@@ -1,4 +1,4 @@
-import { Box, Container, Paper } from "@material-ui/core";
+import { Box, Button, Container, Paper } from "@material-ui/core";
 import React, { useMemo, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DataGrid } from "@mui/x-data-grid";
@@ -6,9 +6,10 @@ import Papa from "papaparse";
 
 const columns = [
   { field: "id", headerName: "ID" },
-  { field: "name", headerName: "Name", width: 175 },
+  { field: "name", headerName: "Name", width: 150 },
   { field: "dateOfFirstDose", headerName: "First dose" },
   { field: "dateOfSecondDose", headerName: "Second dose" },
+  { field: "dateOfBooster", headerName: "Booster" },
   { field: "typeOfVaccine", headerName: "Vaccine type", width: 150 },
   { field: "comments", headerName: "Comments", width: 200 },
 ];
@@ -44,12 +45,15 @@ const rejectStyle = {
 
 const UploadCSV = () => {
   const onDrop = useCallback((files) => {
-    Papa.parse(files[0], {
-      header: true,
-      complete: (result) => {
-        setRecords(result.data);
-      },
-    });
+    if (files.length > 0) {
+      Papa.parse(files[0], {
+        header: true,
+        complete: (result) => {
+          console.log(result.data);
+          setRecords(result.data);
+        },
+      });
+    }
   }, []);
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
@@ -94,6 +98,13 @@ const UploadCSV = () => {
             }}
           />
         </Box>
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ marginTop: "20px" }}
+        >
+          Submit
+        </Button>
       </Paper>
     </Container>
   );
