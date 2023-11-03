@@ -96,9 +96,26 @@ app.post('/user/signup', async (req, res) => {
   const userContract = await UserContract.deployed();
 
   let accounts = await web3.eth.getAccounts();
+
+  if (accounts.length === 0) {
+    return res.status(400).json({ error: 'No accounts found to perform the transaction.' });
+  }
+  
   let result;
 
   try {
+
+     // First, get the hash of the email to check if it's already used
+    //  const emailHash = await userContract.getEmailHash(email);
+
+    //  console.log(emailHash)
+
+    //  console.log("sriram")
+    //  // If userId is not zero, then the email is already in use
+    //  if (userId !== '0') {
+    //    return res.status(400).json({ error: 'Email is already in use.' });
+    //  }
+
     const createUserResult = await userContract.createUser(
       
       email,

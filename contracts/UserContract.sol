@@ -6,49 +6,55 @@ contract UserContract {
         uint256 id;
         string name;
         string email;
-        string password; // Reminder: storing passwords like this is insecure.
+        string passwordHash; 
         bool isActive;
         uint256 version;
     }
 
     uint256 private idCounter = 1;
+    mapping(bytes32 => uint256) private emailToId; // Maps hashed emails to user IDs
     mapping(uint256 => uint256) public latestUserVersion;
     mapping(uint256 => mapping(uint256 => User)) public userRecords;
 
-    event UserCreated(
-        uint256 indexed id,
-        string email,
-        string password // For the sake of this example, password is included here, but it is not secure.
-    );
+    event UserCreated(uint256 id, string email);
+    event UserUpdated(uint256 id, string email, bool isActive);
+    event UserDeactivated(uint256 id);
 
-    event UserUpdated(
-        uint256 indexed id,
-        string name,
-        string email,
-        string password,
-        bool isActive,
-        uint256 version
-    );
+    // Helper function to hash the email
+    function hashEmail(string memory email) private pure returns (bytes32) {
+        return keccak256(abi.encodePacked(email));
+    }
 
-    event UserDeactivated(
-        uint256 indexed id
-    );
+    function getEmailHash(string memory email) public view returns (bytes32) {
+    return hashEmail(email);
+    }
+
+    function hashPassword(string memory password) private pure returns (string memory) {
+        return string(abi.encodePacked(keccak256(abi.encodePacked(password))));
+    }
+
 
     function createUser(string memory email, string memory password) public {
-        uint256 userId = idCounter;
-        idCounter++; // Increment the ID counter for the next user
+
+        bytes32 emailHash = hashEmail(email);
+
+        // Check if the email is already in use
+        require(emailToId[emailHash] == 0, "Email already in use.");
+
+        uint256 userId = idCounter++;
+        emailToId[emailHash] = userId;
         uint256 version = 1;
         latestUserVersion[userId] = version;
 
-        User storage user = userRecords[userId][version];
+        User storage user = userRecords[userId][1];
         user.id = userId;
         user.name = ""; // Placeholder for user name
         user.email = email;
-        user.password = password;
-        user.isActive = false; // Assuming a user is active upon creation
-        user.version = version;
+        user.passwordHash = hashPassword(password);
+        user.isActive = false; // Assuming a user is inactive upon creation
+        user.version = 1;
 
-        emit UserCreated(userId, email, password);
+        emit UserCreated(userId, email);
     }
 
     function updateUser(uint256 id, string memory name, string memory email, string memory password) public {
@@ -59,11 +65,11 @@ contract UserContract {
         user.id = id;
         user.name = name;
         user.email = email;
-        user.password = password; // Update password here
+        user.passwordHash = hashPassword(password);
         user.isActive = true;
         user.version = version;
 
-        emit UserUpdated(id, name, email, password, true, version);
+        emit UserUpdated(id, email, user.isActive);
     }
 
     function deactivateUser(uint256 id) public {
@@ -82,5 +88,4 @@ contract UserContract {
         return userRecords[id][version];
     }
 
-    // Add more functions if necessary...
 }
