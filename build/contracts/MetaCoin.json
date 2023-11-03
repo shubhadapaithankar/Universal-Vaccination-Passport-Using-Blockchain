@@ -107,7 +107,7 @@
   "sourceMap": "356:674:1:-;;;493:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;527:9:1;518:8;:19;;;;;;;;;;540:5;518:27;;356:674;;;;;;",
   "deployedSourceMap": "356:674:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;356:674:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;819:117;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;819:117:1;-1:-1:-1;;;;;819:117:1;;:::i;:::-;;;;;;;;;;;;;;;;552:264;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;552:264:1;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;939:89;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;939:89:1;-1:-1:-1;;;;;939:89:1;;:::i;819:117::-;878:4;894:10;:18;913:16;924:4;913:10;:16::i;:::-;930:1;894:38;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;894:38:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;894:38:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;894:38:1;;819:117;-1:-1:-1;;819:117:1:o;552:264::-;650:10;616:15;641:20;;;;;;;;;;;:29;-1:-1:-1;637:47:1;;;-1:-1:-1;679:5:1;672:12;;637:47;697:10;688:8;:20;;;;;;;;;;;:30;;;;;;;-1:-1:-1;;;;;722:18:1;;;;;;;;;:28;;;;;;759:38;;;;;;;722:18;;697:10;759:38;;;;;;;;;;;-1:-1:-1;808:4:1;552:264;;;;;:::o;939:89::-;-1:-1:-1;;;;;1010:14:1;993:4;1010:14;;;;;;;;;;;;939:89::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.25 <0.7.0;\n\nimport \"./ConvertLib.sol\";\n\n// This is just a simple example of a coin-like contract.\n// It is not standards compatible and cannot be expected to talk to other\n// coin/token contracts. If you want to create a standards-compliant\n// token, see: https://github.com/ConsenSys/Tokens. Cheers!\n\ncontract MetaCoin {\n\tmapping (address => uint) balances;\n\n\tevent Transfer(address indexed _from, address indexed _to, uint256 _value);\n\n\tconstructor() public {\n\t\tbalances[tx.origin] = 10000;\n\t}\n\n\tfunction sendCoin(address receiver, uint amount) public returns(bool sufficient) {\n\t\tif (balances[msg.sender] < amount) return false;\n\t\tbalances[msg.sender] -= amount;\n\t\tbalances[receiver] += amount;\n\t\temit Transfer(msg.sender, receiver, amount);\n\t\treturn true;\n\t}\n\n\tfunction getBalanceInEth(address addr) public view returns(uint){\n\t\treturn ConvertLib.convert(getBalance(addr),2);\n\t}\n\n\tfunction getBalance(address addr) public view returns(uint) {\n\t\treturn balances[addr];\n\t}\n}\n",
-  "sourcePath": "/Users/philliphnguyen/Desktop/Universal-Vaccination-Passport-Using-Blockchain/contracts/MetaCoin.sol",
+  "sourcePath": "E:\\SJSU\\CMPE 295\\Final Project\\Universal-Vaccination-Passport-Using-Blockchain\\contracts\\MetaCoin.sol",
   "ast": {
     "absolutePath": "project:/contracts/MetaCoin.sol",
     "exportedSymbols": {
@@ -2632,14 +2632,14 @@
     "5777": {
       "events": {},
       "links": {
-        "ConvertLib": "0xBC0d592127C119F422A8878f433858cA1ba8f5F4"
+        "ConvertLib": "0x04a4643Bf6BcA85C7617babAFe5fc8Add8a61f19"
       },
-      "address": "0x75985E435e03068C63A78c5042E5cb5DC06Cd43A",
-      "transactionHash": "0xb985cb1543160512b716af4d557c63125098d3c6c0864844caed39c0bc9aa948"
+      "address": "0x4e34D2a35417B1702BbC0d38B261C0bd837b652c",
+      "transactionHash": "0x073570f1964eff1ef06e3057274d165b695de6356401e66680971ff324c5cd94"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-10T23:26:57.766Z",
+  "updatedAt": "2023-11-03T17:45:15.297Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
