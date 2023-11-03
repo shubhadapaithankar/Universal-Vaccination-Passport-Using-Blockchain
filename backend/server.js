@@ -9,6 +9,9 @@ const vaccinationRecordContract = contract(vaccinationRecord);
 var cors = require('cors')
 
 vaccinationRecordContract.setProvider(web3.currentProvider);
+const userContract = require('../build/contracts/UserContract.json')
+const UserContract = contract(userContract);
+UserContract.setProvider(web3.currentProvider);
 
 
 
@@ -85,6 +88,40 @@ app.get('/vaccination/record/:id', async (req, res) => {
 
 
 });
+
+app.post('/user/signup', async (req, res) => {
+  const { email, password } = req.body;
+
+  // const userId = generateUniqueId(); 
+  const userContract = await UserContract.deployed();
+
+  let accounts = await web3.eth.getAccounts();
+  let result;
+
+  try {
+    const createUserResult = await userContract.createUser(
+      
+      email,
+      password,
+      { from: accounts[0] } 
+    );
+
+    result = {
+      email: email,
+      success: true,
+      transactionHash: createUserResult.tx
+    };
+  } catch (error) {
+    result = {
+      email: email,
+      success: false,
+      message: error.message
+    };
+  }
+
+  res.json(result);
+});
+
 
 
 // //   struct VaccinationRecord {
