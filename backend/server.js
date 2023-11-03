@@ -22,18 +22,35 @@ app.post('/vaccination/record', async (req, res) => {
 
   console.log(req.body);
 
-  const id = req.body.id;
-  const name = req.body.name;
-  const dateOfFirstDose = req.body.dateOfFirstDose;
-  const dateOfSecondDose = req.body.dateOfSecondDose;
-  const typeOfVaccine = req.body.typeOfVaccine;
-  const content = req.body.content;
-
+  let results = [];
   let accounts = await web3.eth.getAccounts();
   const deployed = await vaccinationRecordContract.deployed();
 
-  const cR = await deployed.createRecord(id, name, dateOfFirstDose, dateOfSecondDose, typeOfVaccine, content, {from: accounts[0]})
-  res.json(cR);
+
+  for (let record of req.body.records) {
+    const id = record.id;
+    const name = record.name;
+    const dateOfFirstDose = record.dateOfFirstDose;
+    const dateOfSecondDose = record.dateOfSecondDose;
+    const typeOfVaccine = record.typeOfVaccine;
+    const content = record.content;
+
+    try {
+      const cR = await deployed.createRecord(id, name, dateOfFirstDose, dateOfSecondDose, typeOfVaccine, content, { from: accounts[0] });
+      results.push({
+        id: id,
+        success: true,
+        data: cR
+      });
+    } catch (error) {
+      results.push({
+        id: id,
+        success: false,
+        message: error.message
+      });
+    }
+  }
+  res.json(results);
 });
 
 app.get('/vaccination/record/:id', async (req, res) => {
