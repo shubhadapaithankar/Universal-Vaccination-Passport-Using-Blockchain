@@ -4,6 +4,7 @@ import HospitalLogin from "./components/HospitalLogin";
 import HospitalRegistration from "./components/HospitalRegistration";
 import UploadCSV from "./components/UploadCSV";
 import Vaccination from "./components/Vaccination";
+import Admin from "./components/admin/Admin";
 import backimage from "./images/back.jpg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -26,11 +27,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Vaccination />} />
           <Route path="/hospitalLogin" element={<HospitalLogin />} />
-          <Route
-            path="/hospitalRegistration"
-            element={<HospitalRegistration />}
-          />
+          <Route path="/hospitalRegistration" element={<HospitalRegistration />} />
           <Route path="/uploadCSV" element={<UploadCSV />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Router>
     </div>
