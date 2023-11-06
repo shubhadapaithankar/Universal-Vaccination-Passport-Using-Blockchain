@@ -29,6 +29,10 @@ contract UserContract {
     return hashEmail(email);
     }
 
+    function getUserIdByEmail(bytes32 emailHash) public view returns (uint256) {
+    return emailToId[emailHash];
+    }
+
     function hashPassword(string memory password) private pure returns (string memory) {
         return string(abi.encodePacked(keccak256(abi.encodePacked(password))));
     }

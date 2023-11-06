@@ -7,6 +7,7 @@ const vaccinationRecord = require('../build/contracts/VaccinationRecord.json')
 var web3 = new Web3(provider)
 const vaccinationRecordContract = contract(vaccinationRecord);
 var cors = require('cors')
+const user = require("./controllers/user")
 
 vaccinationRecordContract.setProvider(web3.currentProvider);
 const userContract = require('../build/contracts/UserContract.json')
@@ -18,8 +19,12 @@ UserContract.setProvider(web3.currentProvider);
 const app = express();
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
-
 app.use(bodyParser.json())
+app.use('/api/user',user)
+
+
+const InitiateMongoServer = require("./config/mongo/mongodb")
+InitiateMongoServer()
 
 app.post('/vaccination/record', async (req, res) => {
 
@@ -137,6 +142,41 @@ app.post('/user/signup', async (req, res) => {
   }
 
   res.json(result);
+});
+
+app.post('/user/signin', async (req, res) => {
+  const { email, password } = req.body;
+  const userContract = await UserContract.deployed();
+  
+  // Hash the email to get the emailHash to lookup the user
+  const emailHash = web3.utils.keccak256(email);
+
+  try {
+    // Check if the email exists in the contract
+    // const userId = await userContract.emailToId(emailHash).call();
+    const userId = await userContract.getUserIdByEmail(emailHash);
+
+    if (userId === '0') {
+      return res.status(404).json({ error: 'User does not exist.' });
+    }
+
+    // Get the latest user data
+    const userData = await userContract.getLatestUserData(userId);
+
+    // Check if the password is correct
+    const passwordHash = web3.utils.keccak256(password);
+    if (userData.passwordHash === passwordHash) {
+      // Generate a session or token for the frontend to use
+      const sessionToken = generateSessionToken(userData);
+      
+      // Send back the session token
+      res.json({ success: true, token: sessionToken });
+    } else {
+      res.status(401).json({ error: 'Invalid password.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 
