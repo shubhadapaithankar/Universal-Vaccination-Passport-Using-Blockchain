@@ -41,10 +41,11 @@ app.post('/vaccination/record', async (req, res) => {
     const dateOfFirstDose = record.dateOfFirstDose;
     const dateOfSecondDose = record.dateOfSecondDose;
     const typeOfVaccine = record.typeOfVaccine;
+    const email = record.email;
     const content = record.content;
 
     try {
-      const cR = await deployed.createRecord(id, name, dateOfFirstDose, dateOfSecondDose, typeOfVaccine, content, { from: accounts[0] });
+      const cR = await deployed.createRecord(id, name, dateOfFirstDose, dateOfSecondDose, typeOfVaccine, email, content, { from: accounts[0] });
       results.push({
         id: id,
         success: true,
@@ -82,17 +83,39 @@ app.get('/vaccination/record/:id', async (req, res) => {
       dateOfFirstDose: cR.logs[0].args.dateOfFirstDose,
       dateOfSecondDose: cR.logs[0].args.dateOfSecondDose,
       typeOfVaccine: cR.logs[0].args.typeOfVaccine,
+      email: cR.logs[0].args.email,
       content: cR.logs[0].args.content
     }
     res.json(resp);
   } else {
     res.json({ message: "Not Found" })
   }
-
-
-
-
 });
+
+app.get('/vaccination-records/:email', async (req, res) => {
+  let email = req.params.email;
+  const deployed = await vaccinationRecordContract.deployed();
+
+  try {
+
+    let records = await deployed.getRecordsByEmail(email);
+
+    let processedRecords = records.map(record => ({
+      id: record.id.toString(), 
+      name: record.name,
+      dateOfFirstDose: record.dateOfFirstDose,
+      dateOfSecondDose: record.dateOfSecondDose,
+      typeOfVaccine: record.typeOfVaccine,
+      email: record.email, 
+      content: record.content
+    }));
+
+    res.json({ success: true, records: processedRecords });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 
 app.post('/user/signup', async (req, res) => {
   const { email, password } = req.body;
