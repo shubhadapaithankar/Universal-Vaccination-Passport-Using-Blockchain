@@ -26,10 +26,10 @@ app.use('/api/user',user)
 const InitiateMongoServer = require("./config/mongo/mongodb")
 InitiateMongoServer()
 
-app.post('/vaccination/record', async (req, res) => {
+app.post('/vaccination/record/:email', async (req, res) => {
 
   console.log(req.body);
-
+  var email = req.params.email;
   let results = [];
   let accounts = await web3.eth.getAccounts();
   const deployed = await vaccinationRecordContract.deployed();
@@ -41,7 +41,6 @@ app.post('/vaccination/record', async (req, res) => {
     const dateOfFirstDose = record.dateOfFirstDose;
     const dateOfSecondDose = record.dateOfSecondDose;
     const typeOfVaccine = record.typeOfVaccine;
-    const email = record.email;
     const content = record.content;
 
     try {
