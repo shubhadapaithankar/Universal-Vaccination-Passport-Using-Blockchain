@@ -1,11 +1,42 @@
-import { Button, Container, Paper, TextField } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Paper,
+  Snackbar,
+  TextField,
+} from "@material-ui/core";
+import { Alert } from "@mui/material";
 import React, { useState } from "react";
 import PasswordChecklist from "react-password-checklist";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../apiConfig";
 
 const HospitalRegistration = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false);
   const [passwordAgain, setPasswordAgain] = useState("");
   const [passwordValid, setPasswordValid] = useState(false);
+
+  const navigate = useNavigate();
+
+  const onSubmit = async () => {
+    const response = await fetch(API_URL + "/api/user/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }),
+    }).then((res) => res.json());
+
+    if (response.status === "400") {
+      setOpen(true);
+    } else {
+      localStorage.setItem("token", response.user.token);
+      navigate("/uploadCSV");
+    }
+  };
 
   return (
     <Container maxWidth="sm">
@@ -17,6 +48,8 @@ const HospitalRegistration = () => {
           variant="outlined"
           fullWidth
           style={{ marginBottom: "10px" }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           id="password"
@@ -25,6 +58,7 @@ const HospitalRegistration = () => {
           type="password"
           fullWidth
           style={{ marginBottom: "10px" }}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <TextField
@@ -34,6 +68,7 @@ const HospitalRegistration = () => {
           type="password"
           fullWidth
           style={{ marginBottom: "10px" }}
+          value={passwordAgain}
           onChange={(e) => setPasswordAgain(e.target.value)}
         />
         <div style={{ textAlign: "start" }}>
@@ -52,10 +87,20 @@ const HospitalRegistration = () => {
           color="secondary"
           style={{ marginTop: "20px" }}
           disabled={!passwordValid}
+          onClick={onSubmit}
         >
           Submit
         </Button>
       </Paper>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert onClose={() => setOpen(false)} severity="error">
+          Email already taken
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
