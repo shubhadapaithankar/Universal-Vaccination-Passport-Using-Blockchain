@@ -1,7 +1,7 @@
 # Universal-Vaccination-Passport-Using-Blockchain
 Universal Vaccination Passport Using Blockchain
 
-![Untitled presentation](https://github.com/shubhadapaithankar/Universal-Vaccination-Passport-Using-Blockchain/assets/99461999/f0802fff-ae7f-4959-8c8e-59cf20dc2222)
+![Untitled presentation](https://github.com/shubhadapaithankar/Universal-Vaccination-Passport-Using-Blockchain/assets/99461999/b82a4e16-0c69-49f8-ba65-b3537a8c0321)
 
 ## Required installation before starting the app.
 
