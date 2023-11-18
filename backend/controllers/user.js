@@ -6,6 +6,8 @@ const crypto = require('crypto');
 const User = require("../model/user");
 const {UserAuth} = require("../services/user")
 const router = express.Router();
+const axios = require('axios');
+
 // const passport = require('passport')
 // require('../config/mongo/passport')
 
@@ -18,7 +20,7 @@ genToken = user => {
     exp: new Date().setDate(new Date().getDate() + 1)
   }, 'TOP_SECRET');
 }
-
+const OPENAI_API_KEY = "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";  
                   
 router.post("/register", async (req, res) =>
 {
@@ -147,7 +149,41 @@ router.get("/getAllUsers", async (req, res) => {
       res.status(500).send(response);
     }
   });
-  
 
+  router.post('/summarize_rules', async (req, res) => {
+    const user_input = req.body.user_input;
+
+    try {
+        // Framing the prompt
+        const prompt = `As an assistant knowledgeable about COVID-19 vaccinations and the use of blockchain technology for securing vaccination records, please provide a detailed response to the following query: ${user_input}`;
+
+        const response = await axios.post('https://api.openai.com/v1/chat/completions', {
+            model: "gpt-3.5-turbo", 
+            messages: [
+                {"role": "system", "content": "You are an assistant with expertise in COVID-19 vaccinations and blockchain technology for enhancing the security and verifiability of vaccination records."},
+                {"role": "user", "content": prompt}
+            ]
+        }, {
+            headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const rules = extractRules(response.data.choices[0].message.content);
+        res.json({ rules });
+    } catch (error) {
+        console.error('Error calling GPT-3:', error);
+        if (error.response) {
+            // Log detailed API response errors
+            console.error('Response:', error.response.data);
+        }
+        res.status(500).send('Error processing your request');
+    }
+});
+
+function extractRules(response) {
+    return response.split('\n').filter(rule => rule.trim()).map(rule => rule.trim());
+}
 
 module.exports = router
