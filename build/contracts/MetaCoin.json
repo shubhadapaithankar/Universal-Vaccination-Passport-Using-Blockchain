@@ -107,7 +107,7 @@
   "sourceMap": "356:674:1:-;;;493:56;8:9:-1;5:2;;;30:1;27;20:12;5:2;-1:-1;527:9:1;518:8;:19;;;;;;;;;;540:5;518:27;;356:674;;;;;;",
   "deployedSourceMap": "356:674:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;356:674:1;;;;;;;;;;;;;;;;;;;;;;;;;;;;;819:117;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;819:117:1;-1:-1:-1;;;;;819:117:1;;:::i;:::-;;;;;;;;;;;;;;;;552:264;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;;552:264:1;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;939:89;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;939:89:1;-1:-1:-1;;;;;939:89:1;;:::i;819:117::-;878:4;894:10;:18;913:16;924:4;913:10;:16::i;:::-;930:1;894:38;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;894:38:1;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;894:38:1;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;894:38:1;;819:117;-1:-1:-1;;819:117:1:o;552:264::-;650:10;616:15;641:20;;;;;;;;;;;:29;-1:-1:-1;637:47:1;;;-1:-1:-1;679:5:1;672:12;;637:47;697:10;688:8;:20;;;;;;;;;;;:30;;;;;;;-1:-1:-1;;;;;722:18:1;;;;;;;;;:28;;;;;;759:38;;;;;;;722:18;;697:10;759:38;;;;;;;;;;;-1:-1:-1;808:4:1;552:264;;;;;:::o;939:89::-;-1:-1:-1;;;;;1010:14:1;993:4;1010:14;;;;;;;;;;;;939:89::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.25 <0.7.0;\n\nimport \"./ConvertLib.sol\";\n\n// This is just a simple example of a coin-like contract.\n// It is not standards compatible and cannot be expected to talk to other\n// coin/token contracts. If you want to create a standards-compliant\n// token, see: https://github.com/ConsenSys/Tokens. Cheers!\n\ncontract MetaCoin {\n\tmapping (address => uint) balances;\n\n\tevent Transfer(address indexed _from, address indexed _to, uint256 _value);\n\n\tconstructor() public {\n\t\tbalances[tx.origin] = 10000;\n\t}\n\n\tfunction sendCoin(address receiver, uint amount) public returns(bool sufficient) {\n\t\tif (balances[msg.sender] < amount) return false;\n\t\tbalances[msg.sender] -= amount;\n\t\tbalances[receiver] += amount;\n\t\temit Transfer(msg.sender, receiver, amount);\n\t\treturn true;\n\t}\n\n\tfunction getBalanceInEth(address addr) public view returns(uint){\n\t\treturn ConvertLib.convert(getBalance(addr),2);\n\t}\n\n\tfunction getBalance(address addr) public view returns(uint) {\n\t\treturn balances[addr];\n\t}\n}\n",
-  "sourcePath": "E:\\SJSU\\CMPE 295\\Final Project\\Universal-Vaccination-Passport-Using-Blockchain\\contracts\\MetaCoin.sol",
+  "sourcePath": "/Users/philliphnguyen/Desktop/Universal-Vaccination-Passport-Using-Blockchain/contracts/MetaCoin.sol",
   "ast": {
     "absolutePath": "project:/contracts/MetaCoin.sol",
     "exportedSymbols": {
@@ -337,7 +337,7 @@
                           "name": "tx",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 765,
+                          "referencedDeclaration": 843,
                           "src": "527:2:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_transaction",
@@ -468,7 +468,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 753,
+                          "referencedDeclaration": 831,
                           "src": "650:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -582,7 +582,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 753,
+                          "referencedDeclaration": 831,
                           "src": "697:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -724,7 +724,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 753,
+                          "referencedDeclaration": 831,
                           "src": "768:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -1607,7 +1607,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 765,
+                                      "referencedDeclaration": 843,
                                       "type": "tx",
                                       "value": "tx"
                                     },
@@ -1835,7 +1835,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 753,
+                                      "referencedDeclaration": 831,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -1959,7 +1959,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 753,
+                                      "referencedDeclaration": 831,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -2143,7 +2143,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 753,
+                                  "referencedDeclaration": 831,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -2632,14 +2632,15 @@
     "5777": {
       "events": {},
       "links": {
-        "ConvertLib": "0xd8A99D050372b59A45303A84a79Ca4EB928686C0"
+        "ConvertLib": "0x26B266D0ec84518ddAB02Dc8d385e86c25C6e954"
       },
-      "address": "0x2A236CA566f7Ef28E4EE5b591cdFE9B91b44e3bb",
-      "transactionHash": "0x50d64e21e67a223f52d16c459c55428335510355ca5b7f59010f3a744525d016"
+      "address": "0xeb3A0441d9B24CBFD743b85009FbE1D5998B65b2",
+      "transactionHash": "0x4c1aeb98c48b892aaa9fec8d1a30cf74cf0f507554c30b7029188f09f55bf144"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-11-04T06:46:57.334Z",
+  "updatedAt": "2023-11-20T22:06:23.420Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
