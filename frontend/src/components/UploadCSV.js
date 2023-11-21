@@ -46,9 +46,11 @@ const rejectStyle = {
 };
 
 const UploadCSV = () => {
-  const jwt = jwtDecode(localStorage.getItem("token"));
+  const jwt = localStorage.getItem("token");
+  const jwtDecoded = jwt === null ? null : jwtDecode(jwt);
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const onDrop = useCallback((files) => {
     if (files.length > 0) {
@@ -78,20 +80,62 @@ const UploadCSV = () => {
   const [records, setRecords] = useState([]);
 
   const onSubmit = async () => {
-    /*const response = await fetch(
-      API_URL + "/vaccination/record/" + jwt.email,
-      {
+    setButtonDisabled(true);
+
+    const email = jwtDecoded === null ? "" : jwtDecoded.email;
+    const isValidUser = await validUser(email);
+
+    if (isValidUser) {
+      const response = await fetch(API_URL + "/vaccination/record/" + email, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ records: records }),
-      }
-    ).then((res) => res.json());
+      }).then((res) => res.json());
 
-    console.log(response);
-    setOpen(true);*/
+      setOpen(true);
+
+      if (uploadSuccessful(response)) {
+        setSuccess(true);
+      } else {
+        setSuccess(false);
+      }
+    } else {
+      setOpen(true);
+      setSuccess(false);
+    }
+
+    setButtonDisabled(false);
+  };
+
+  const validUser = async (email) => {
+    const response = await fetch(API_URL + "/api/user/getAllUsers", {
+      method: "GET",
+    }).then((res) => res.json());
+
+    if (response.success) {
+      const users = response.users;
+      const foundUser = users.find((user) => user.email === email);
+
+      if (foundUser) {
+        console.log("found user");
+        return foundUser.isActive;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const uploadSuccessful = (records) => {
+    for (const record of records) {
+      if (!record.success) return false;
+    }
+
+    return true;
   };
 
   return (
@@ -126,6 +170,7 @@ const UploadCSV = () => {
           color="secondary"
           style={{ marginTop: "20px" }}
           onClick={onSubmit}
+          disabled={buttonDisabled}
         >
           Submit
         </Button>
@@ -141,7 +186,7 @@ const UploadCSV = () => {
         >
           {success
             ? "Vaccination records successfully uploaded"
-            : "Error in uploading vaccination records"}
+            : "Unauthorized to upload vaccination records"}
         </Alert>
       </Snackbar>
     </Container>

@@ -9189,12 +9189,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x7aCd38b4239C4bbF81D47A3216133B49E8c549eE",
-      "transactionHash": "0xccc699f7ff1c25f2cde1c7cc589a3d04fa1f6dbe6eda1199e1e71e8b34cff41a"
+      "address": "0x2e98f8D22AB2706220BDaa189A0c544734069DF7",
+      "transactionHash": "0xb4baafb8e80597eebd4fdd8ecc45b88a37592a03ee5d44645a0ed3fbfb363c24"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-11-20T22:06:24.610Z",
+  "updatedAt": "2023-11-21T22:49:15.281Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
