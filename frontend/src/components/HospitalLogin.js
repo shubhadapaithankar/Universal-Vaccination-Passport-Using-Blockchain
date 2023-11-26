@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  Link,
   Paper,
   Snackbar,
   TextField,
@@ -10,7 +11,7 @@ import { API_URL } from "../apiConfig";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const HospitalLogin = () => {
+const HospitalLogin = ({ setIsAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ const HospitalLogin = () => {
       setOpen(true);
     } else {
       localStorage.setItem("token", response.user.token);
+      setIsAuth(true);
       navigate("/uploadCSV");
     }
   };
@@ -57,10 +59,16 @@ const HospitalLogin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div
+          style={{ marginTop: "10px" }}
+          onClick={() => navigate("/hospitalRegistration")}
+        >
+          <Link className="regLink">Don't have an account? Register here</Link>
+        </div>
         <Button
           variant="contained"
           color="secondary"
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "10px" }}
           onClick={onSubmit}
         >
           Submit

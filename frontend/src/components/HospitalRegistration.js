@@ -11,7 +11,7 @@ import PasswordChecklist from "react-password-checklist";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../apiConfig";
 
-const HospitalRegistration = () => {
+const HospitalRegistration = ({ setIsAuth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
@@ -34,6 +34,7 @@ const HospitalRegistration = () => {
       setOpen(true);
     } else {
       localStorage.setItem("token", response.user.token);
+      setIsAuth(true);
       navigate("/uploadCSV");
     }
   };
