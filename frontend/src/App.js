@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import Appbar from "./components/Appbar";
 import HospitalLogin from "./components/HospitalLogin";
@@ -9,6 +10,8 @@ import backimage from "./images/back.jpg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("token") !== null);
+
   return (
     <div
       className="bg_image"
@@ -23,11 +26,17 @@ function App() {
       }}
     >
       <Router>
-        <Appbar />
+        <Appbar isAuth={isAuth} setIsAuth={setIsAuth} />
         <Routes>
           <Route path="/" element={<Vaccination />} />
-          <Route path="/hospitalLogin" element={<HospitalLogin />} />
-          <Route path="/hospitalRegistration" element={<HospitalRegistration />} />
+          <Route
+            path="/hospitalLogin"
+            element={<HospitalLogin setIsAuth={setIsAuth} />}
+          />
+          <Route
+            path="/hospitalRegistration"
+            element={<HospitalRegistration setIsAuth={setIsAuth} />}
+          />
           <Route path="/uploadCSV" element={<UploadCSV />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

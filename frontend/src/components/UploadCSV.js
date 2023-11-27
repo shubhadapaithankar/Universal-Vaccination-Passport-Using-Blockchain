@@ -1,17 +1,19 @@
-import { Box, Button, Container, Paper } from "@material-ui/core";
+import { Box, Button, Container, Paper, Snackbar } from "@material-ui/core";
 import React, { useMemo, useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DataGrid } from "@mui/x-data-grid";
 import Papa from "papaparse";
+import { API_URL } from "../apiConfig";
+import { jwtDecode } from "jwt-decode";
+import { Alert } from "@mui/material";
 
 const columns = [
   { field: "id", headerName: "ID" },
   { field: "name", headerName: "Name", width: 150 },
   { field: "dateOfFirstDose", headerName: "First dose" },
   { field: "dateOfSecondDose", headerName: "Second dose" },
-  { field: "dateOfBooster", headerName: "Booster" },
   { field: "typeOfVaccine", headerName: "Vaccine type", width: 150 },
-  { field: "comments", headerName: "Comments", width: 200 },
+  { field: "content", headerName: "Content", width: 200 },
 ];
 
 const baseStyle = {
@@ -44,6 +46,12 @@ const rejectStyle = {
 };
 
 const UploadCSV = () => {
+  const jwt = localStorage.getItem("token");
+  const jwtDecoded = jwt === null ? null : jwtDecode(jwt);
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const onDrop = useCallback((files) => {
     if (files.length > 0) {
       Papa.parse(files[0], {
@@ -70,6 +78,65 @@ const UploadCSV = () => {
   );
 
   const [records, setRecords] = useState([]);
+
+  const onSubmit = async () => {
+    setButtonDisabled(true);
+
+    const email = jwtDecoded === null ? "" : jwtDecoded.email;
+    const isValidUser = await validUser(email);
+
+    if (isValidUser) {
+      const response = await fetch(API_URL + "/vaccination/record/" + email, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ records: records }),
+      }).then((res) => res.json());
+
+      setOpen(true);
+
+      if (uploadSuccessful(response)) {
+        setSuccess(true);
+      } else {
+        setSuccess(false);
+      }
+    } else {
+      setOpen(true);
+      setSuccess(false);
+    }
+
+    setButtonDisabled(false);
+  };
+
+  const validUser = async (email) => {
+    const response = await fetch(API_URL + "/api/user/getAllUsers", {
+      method: "GET",
+    }).then((res) => res.json());
+
+    if (response.success) {
+      const users = response.users;
+      const foundUser = users.find((user) => user.email === email);
+
+      if (foundUser) {
+        console.log("found user");
+        return foundUser.isActive;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const uploadSuccessful = (records) => {
+    for (const record of records) {
+      if (!record.success) return false;
+    }
+
+    return true;
+  };
 
   return (
     <Container maxWidth="md">
@@ -102,10 +169,26 @@ const UploadCSV = () => {
           variant="contained"
           color="secondary"
           style={{ marginTop: "20px" }}
+          onClick={onSubmit}
+          disabled={buttonDisabled}
         >
           Submit
         </Button>
       </Paper>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={success ? "success" : "error"}
+        >
+          {success
+            ? "Vaccination records successfully uploaded"
+            : "Unauthorized to upload vaccination records"}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
