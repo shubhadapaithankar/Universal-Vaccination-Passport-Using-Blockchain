@@ -17,10 +17,11 @@ import {
 import { ListItemButton } from "@mui/material";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-import ChatIcon from "@mui/icons-material/Chat"
+import ChatIcon from "@mui/icons-material/Chat";
 import Login from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { API_URL } from "../apiConfig";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,11 +61,20 @@ export default function Appbar({ isAuth, setIsAuth }) {
     setMenuOpen(false);
   };
 
-  const handleLogout = () => {
-    navigate("/");
-    localStorage.removeItem("token");
-    setIsAuth(false);
-    setMenuOpen(false);
+  const handleLogout = async () => {
+    const response = await fetch(API_URL + "/api/user/logout", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    }).then((res) => res.json());
+
+    if (response.success) {
+      navigate("/");
+      localStorage.removeItem("token");
+      setIsAuth(false);
+      setMenuOpen(false);
+    }
   };
 
   return (
@@ -83,7 +93,6 @@ export default function Appbar({ isAuth, setIsAuth }) {
           <Drawer
             anchor="left"
             open={menuOpen}
-            onOpen={() => setMenuOpen(true)}
             onClose={() => setMenuOpen(false)}
           >
             <Box>

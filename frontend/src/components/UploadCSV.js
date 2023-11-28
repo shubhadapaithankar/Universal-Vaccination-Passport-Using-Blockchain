@@ -6,6 +6,7 @@ import Papa from "papaparse";
 import { API_URL } from "../apiConfig";
 import { jwtDecode } from "jwt-decode";
 import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "id", headerName: "ID" },
@@ -51,6 +52,7 @@ const UploadCSV = () => {
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const navigate = useNavigate();
 
   const onDrop = useCallback((files) => {
     if (files.length > 0) {
@@ -99,6 +101,7 @@ const UploadCSV = () => {
 
       if (uploadSuccessful(response)) {
         setSuccess(true);
+        navigate("/viewRecords");
       } else {
         setSuccess(false);
       }

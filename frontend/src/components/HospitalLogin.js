@@ -33,7 +33,12 @@ const HospitalLogin = ({ setIsAuth }) => {
     } else {
       localStorage.setItem("token", response.user.token);
       setIsAuth(true);
-      navigate("/uploadCSV");
+
+      if (email === "admin@gmail.com") {
+        navigate("/admin");
+      } else {
+        navigate("/uploadCSV");
+      }
     }
   };
 

@@ -10,6 +10,7 @@ import Chat from "./components/ChatComponent";
 
 import backimage from "./images/back.jpg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ViewRecords from "./components/ViewRecords";
 
 function App() {
   const [isAuth, setIsAuth] = useState(localStorage.getItem("token") !== null);
@@ -42,6 +43,7 @@ function App() {
           <Route path="/uploadCSV" element={<UploadCSV />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/viewRecords" element={<ViewRecords />} />
         </Routes>
       </Router>
     </div>
