@@ -6,6 +6,8 @@ import HospitalRegistration from "./components/HospitalRegistration";
 import UploadCSV from "./components/UploadCSV";
 import Vaccination from "./components/Vaccination";
 import Admin from "./components/admin/Admin";
+import Chat from "./components/ChatComponent";
+
 import backimage from "./images/back.jpg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -39,6 +41,7 @@ function App() {
           />
           <Route path="/uploadCSV" element={<UploadCSV />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </Router>
     </div>
