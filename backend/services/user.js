@@ -63,7 +63,13 @@ class UserAuth {
 
         static getAllUsersExceptAdmin = async () => {
             try {
-              const users = await User.find({ email: { $ne: 'admin@gmail.com' } });
+              const users = await User.find({ 
+                $and: [
+                  { email: { $ne: 'admin@gmail.com' } },
+                  { isActive: false }
+                ]
+              });
+
               return users;
             } catch (err) {
               console.log(err);
@@ -86,6 +92,18 @@ class UserAuth {
             }
           };
           
+          static getUserActiveStatus = async (email) => {
+            try {
+                const user = await User.findOne({ email: email });
+                if (!user) {
+                    return null; // User not found
+                }
+                return { isActive: user.isActive };
+            } catch (err) {
+                console.error(err);
+                throw new Error("Error fetching user's active status");
+            }
+        };
           
 }
 
