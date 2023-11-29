@@ -22,16 +22,17 @@ const AdminDashboard = ({ onSignOut }) => {
     fetchData(); 
   }, []);
 
-  const handleAccept = (id) => {
-    setRegistrations(registrations.filter((registration) => registration.id !== id));
-    window.location.reload();
+  const handleAccept = async (id, userEmail) => {
+    try {      
+      await axios.put(`http://localhost:3000/api/user/toggle-active/${userEmail}`);     
+      setRegistrations(registrations.filter((registration) => registration.id !== id));
+      window.location.reload();
+    } catch (error) {
+      console.error('Error toggling user active status:', error);
+    }
   };
 
-  const handleDecline = (id) => {
-    setRegistrations(registrations.filter((registration) => registration.id !== id));
-    window.location.reload();
-  };
-
+ 
   return (
     <Container maxWidth="sm">
       <br/>
@@ -42,8 +43,7 @@ const AdminDashboard = ({ onSignOut }) => {
         <RegistrationCard
           key={registration.id}
           registration={registration}
-          onAccept={handleAccept}
-          onDecline={handleDecline}
+          onAccept={() => handleAccept(registration.id, registration.email)}
         />
       ))}
     </Container>
