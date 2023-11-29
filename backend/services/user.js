@@ -63,7 +63,13 @@ class UserAuth {
 
         static getAllUsersExceptAdmin = async () => {
             try {
-              const users = await User.find({ email: { $ne: 'admin@gmail.com' } });
+              const users = await User.find({ 
+                $and: [
+                  { email: { $ne: 'admin@gmail.com' } },
+                  { isActive: false }
+                ]
+              });
+              
               return users;
             } catch (err) {
               console.log(err);
