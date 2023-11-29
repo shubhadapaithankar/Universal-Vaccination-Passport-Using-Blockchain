@@ -7,7 +7,7 @@ const Admin = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h3" align="center">
-        Admin Dashboard
+        Admin dashboard
       </Typography>
       <AdminDashboard />
     </Container>

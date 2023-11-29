@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RegistrationCard from './RegistrationCard';
-import { Container, Button, Typography } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
+import axios from 'axios';
 
-const dummyData = [
-  { id: 1, email: 'example1@example.com', password: 'password1', facilityName: 'Hospital A' },
-  { id: 2, email: 'example2@example.com', password: 'password2', facilityName: 'Hospital B' },
-  // Add more dummy data as needed
-];
 
 const AdminDashboard = ({ onSignOut }) => {
-  const [registrations, setRegistrations] = useState(dummyData);
+  const [registrations, setRegistrations] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/user/getAllUsers');
+        const userData = response.data.users;
+        setRegistrations(userData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); 
+  }, []);
 
   const handleAccept = (id) => {
     setRegistrations(registrations.filter((registration) => registration.id !== id));
@@ -23,12 +34,9 @@ const AdminDashboard = ({ onSignOut }) => {
 
   return (
     <Container maxWidth="sm">
-      <Button variant="contained" color="primary" onClick={onSignOut} >
-        Sign Out
-      </Button>
-      <br/> <br/>
+      <br/>
       <Typography variant="h5" align="center" style={{color: 'black'}}>
-        Registration Requests
+        Registration requests
       </Typography>
       {registrations.map((registration) => (
         <RegistrationCard
