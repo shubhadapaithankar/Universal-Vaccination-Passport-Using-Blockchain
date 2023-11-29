@@ -17,6 +17,7 @@ import {
 import { ListItemButton } from "@mui/material";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import ChatIcon from "@mui/icons-material/Chat"
 import Login from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -51,6 +52,11 @@ export default function Appbar({ isAuth, setIsAuth }) {
 
   const goToUploadRecordsPage = () => {
     navigate("/uploadCSV");
+    setMenuOpen(false);
+  };
+
+  const goToChatPage = () => {
+    navigate("/Chat");
     setMenuOpen(false);
   };
 
@@ -96,6 +102,14 @@ export default function Appbar({ isAuth, setIsAuth }) {
                       <UploadFileIcon />
                     </ListItemIcon>
                     <ListItemText primary="Upload Records" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem onClick={goToChatPage}>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <ChatIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Chat with Assistant" />
                   </ListItemButton>
                 </ListItem>
               </List>
