@@ -8,11 +8,7 @@ const RegistrationCard = ({ registration, onAccept, onDecline }) => {
       <Typography>Email: {registration.email}</Typography>
       <Button variant="contained" color="primary" onClick={() => onAccept(registration.id)}>
         Accept
-      </Button>
-      &nbsp; &nbsp;
-      <Button variant="contained" color="secondary" onClick={() => onDecline(registration.id)}>
-        Decline
-      </Button>
+      </Button>      
     </Paper>
   );
 };
