@@ -150,6 +150,21 @@ router.get("/getAllUsers", async (req, res) => {
     }
   });
 
+  router.get("/active-status/:email", async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        const status = await UserAuth.getUserActiveStatus(email);
+        if (status === null) {
+            return res.status(404).json({ success: false, error: "User not found" });
+        }
+        res.json({ success: true, isActive: status.isActive });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ success: false, error: "An error occurred while fetching the user's active status" });
+    }
+});
+
   router.post('/summarize_rules', async (req, res) => {
     const user_input = req.body.user_input;
 
