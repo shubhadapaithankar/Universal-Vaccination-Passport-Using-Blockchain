@@ -5,7 +5,6 @@ const User = require("../model/user");
 class UserAuth {
 
         static registerUser = async (data) => {
-            //console.log(data)
                 try {
                         const query = {
                                 email : data.email,
@@ -28,7 +27,6 @@ class UserAuth {
         }
 
         static loginUser = async (data) => {
-            //console.log(data)
                 try {
                         const query = {
                                 email : data.email,
