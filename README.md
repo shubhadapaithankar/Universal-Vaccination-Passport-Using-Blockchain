@@ -6,19 +6,19 @@ The project presents an innovative COVID-19 vaccination Passport System, leverag
 
 ## Required installation before starting the app.
 
-1. Install Blockchain  `https://trufflesuite.com/ganache/`
-2. Install ` https://www.postman.com/downloads/`
-3. Install for network tunneling `https://ngrok.com/download` 
+1. Install Blockchain:  `https://trufflesuite.com/ganache/`
+2. Install Postman ` https://www.postman.com/downloads/`
+3. For network tunneling, install `https://ngrok.com/download` 
 
 Create an account and follow the necessary steps for setup `https://dashboard.ngrok.com/get-started/setup`
 
-4. run server on 3000 port ` ngrok http 3000`
+4. Run server on 3000 port ` ngrok http 3000`
 
 
 ## clone the repo 
-1. Start backend `cd backend`  `# npm install` 'npm start`
-2. Start front end `cd frontend` '# npm install` 'npm start`
-3. start blockchain 
+1. To start the backend `cd backend`  `# npm install` 'npm start`
+2. To start frontend `cd frontend` '# npm install` 'npm start`
+3. To start the blockchain 
 
 ```
 # npm install -g truffle
