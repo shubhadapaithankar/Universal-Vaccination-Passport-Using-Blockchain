@@ -15,8 +15,8 @@ Create an account and follow the necessary steps for setup `https://dashboard.ng
 
 4. Run server on 3000 port ` ngrok http 3000`
 
-## Clone the repo 
-1. ` # git clone git@github.com:shubhadapaithankar/Universal-Vaccination-Passport-Using-Blockchain.git `
+## How to start the application
+1. clone the repo ` # git clone git@github.com:shubhadapaithankar/Universal-Vaccination-Passport-Using-Blockchain.git `
 2. To start the backend `cd backend`--> `npm install`--> `npm start`
 3. To start frontend `cd frontend`-->`npm install`-->`npm start`
 4. To start the blockchain run the following commands
