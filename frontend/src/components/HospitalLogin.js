@@ -11,7 +11,7 @@ import { API_URL } from "../apiConfig";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const HospitalLogin = ({ setIsAuth }) => {
+const HospitalLogin = ({ setIsAuth, setIsAdmin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
@@ -35,6 +35,7 @@ const HospitalLogin = ({ setIsAuth }) => {
       setIsAuth(true);
 
       if (email === "admin@gmail.com") {
+        setIsAdmin(true);
         navigate("/admin");
       } else {
         navigate("/uploadCSV");
@@ -45,13 +46,14 @@ const HospitalLogin = ({ setIsAuth }) => {
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} style={{ padding: "20px", margin: "20px auto" }}>
-        <h1>Hospital Login</h1>
+        <h1>Login</h1>
+        <p>Login for hospital employees and site admin</p>
         <TextField
           id="email"
           label="Email Address"
           variant="outlined"
           fullWidth
-          style={{ marginBottom: "10px" }}
+          style={{ marginBottom: "10px", marginTop: "5px" }}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -73,7 +75,7 @@ const HospitalLogin = ({ setIsAuth }) => {
         <Button
           variant="contained"
           color="secondary"
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "20px" }}
           onClick={onSubmit}
         >
           Submit

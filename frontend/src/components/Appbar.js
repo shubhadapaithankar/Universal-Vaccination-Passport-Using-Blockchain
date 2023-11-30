@@ -22,6 +22,8 @@ import Login from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { API_URL } from "../apiConfig";
+import ViewListIcon from "@mui/icons-material/ViewList";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Appbar({ isAuth, setIsAuth }) {
+export default function Appbar({ isAuth, setIsAuth, setIsAdmin, isAdmin }) {
   const classes = useStyles();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -56,6 +58,16 @@ export default function Appbar({ isAuth, setIsAuth }) {
     setMenuOpen(false);
   };
 
+  const goToViewRecordsPage = () => {
+    navigate("/viewRecords");
+    setMenuOpen(false);
+  };
+
+  const goToAdminDashboard = () => {
+    navigate("/admin");
+    setMenuOpen(false);
+  };
+
   const goToChatPage = () => {
     navigate("/Chat");
     setMenuOpen(false);
@@ -73,6 +85,7 @@ export default function Appbar({ isAuth, setIsAuth }) {
       navigate("/");
       localStorage.removeItem("token");
       setIsAuth(false);
+      setIsAdmin(false);
       setMenuOpen(false);
     }
   };
@@ -105,14 +118,36 @@ export default function Appbar({ isAuth, setIsAuth }) {
                     <ListItemText primary="Vaccination Passport" />
                   </ListItemButton>
                 </ListItem>
-                <ListItem onClick={goToUploadRecordsPage}>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <UploadFileIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Upload Records" />
-                  </ListItemButton>
-                </ListItem>
+                {isAuth && !isAdmin && (
+                  <ListItem onClick={goToUploadRecordsPage}>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <UploadFileIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Upload Records" />
+                    </ListItemButton>
+                  </ListItem>
+                )}
+                {isAuth && !isAdmin && (
+                  <ListItem onClick={goToViewRecordsPage}>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <ViewListIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="View Your Uploaded Records" />
+                    </ListItemButton>
+                  </ListItem>
+                )}
+                {isAdmin && (
+                  <ListItem onClick={goToAdminDashboard}>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <AdminPanelSettingsIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Admin Dashboard" />
+                    </ListItemButton>
+                  </ListItem>
+                )}
                 <ListItem onClick={goToChatPage}>
                   <ListItemButton>
                     <ListItemIcon>

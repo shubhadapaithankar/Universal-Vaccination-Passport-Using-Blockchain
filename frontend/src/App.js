@@ -13,7 +13,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ViewRecords from "./components/ViewRecords";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("token") !== null);
+  const token = localStorage.getItem("token");
+  const [isAuth, setIsAuth] = useState(token !== null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   return (
     <div
@@ -29,21 +31,31 @@ function App() {
       }}
     >
       <Router>
-        <Appbar isAuth={isAuth} setIsAuth={setIsAuth} />
+        <Appbar
+          isAuth={isAuth}
+          setIsAuth={setIsAuth}
+          setIsAdmin={setIsAdmin}
+          isAdmin={isAdmin}
+        />
         <Routes>
           <Route path="/" element={<Vaccination />} />
           <Route
             path="/hospitalLogin"
-            element={<HospitalLogin setIsAuth={setIsAuth} />}
+            element={
+              <HospitalLogin setIsAuth={setIsAuth} setIsAdmin={setIsAdmin} />
+            }
           />
           <Route
             path="/hospitalRegistration"
             element={<HospitalRegistration setIsAuth={setIsAuth} />}
           />
-          <Route path="/uploadCSV" element={<UploadCSV />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/uploadCSV" element={<UploadCSV isAuth={isAuth} />} />
+          <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />
           <Route path="/chat" element={<Chat />} />
-          <Route path="/viewRecords" element={<ViewRecords />} />
+          <Route
+            path="/viewRecords"
+            element={<ViewRecords isAuth={isAuth} />}
+          />
         </Routes>
       </Router>
     </div>

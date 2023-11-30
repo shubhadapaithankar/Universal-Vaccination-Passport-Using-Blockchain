@@ -1,5 +1,5 @@
 import { Box, Button, Container, Paper, Snackbar } from "@material-ui/core";
-import React, { useMemo, useCallback, useState } from "react";
+import React, { useMemo, useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { DataGrid } from "@mui/x-data-grid";
 import Papa from "papaparse";
@@ -46,13 +46,17 @@ const rejectStyle = {
   borderColor: "#ff1744",
 };
 
-const UploadCSV = () => {
+const UploadCSV = ({ isAuth }) => {
   const jwt = localStorage.getItem("token");
   const jwtDecoded = jwt === null ? null : jwtDecode(jwt);
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuth) navigate("/hospitalLogin");
+  }, []);
 
   const onDrop = useCallback((files) => {
     if (files.length > 0) {
@@ -114,20 +118,12 @@ const UploadCSV = () => {
   };
 
   const validUser = async (email) => {
-    const response = await fetch(API_URL + "/api/user/getAllUsers", {
+    const response = await fetch(API_URL + "/api/user/active-status/" + email, {
       method: "GET",
     }).then((res) => res.json());
 
     if (response.success) {
-      const users = response.users;
-      const foundUser = users.find((user) => user.email === email);
-
-      if (foundUser) {
-        console.log("found user");
-        return foundUser.isActive;
-      } else {
-        return false;
-      }
+      return response.isActive;
     } else {
       return false;
     }

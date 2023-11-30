@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { API_URL } from "../apiConfig";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "id", headerName: "ID" },
@@ -13,12 +14,15 @@ const columns = [
   { field: "content", headerName: "Content", width: 200 },
 ];
 
-const ViewRecords = () => {
+const ViewRecords = ({ isAuth }) => {
   const [records, setRecords] = useState([]);
   const jwt = localStorage.getItem("token");
   const jwtDecoded = jwt === null ? null : jwtDecode(jwt);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAuth) navigate("/hospitalLogin");
+
     getRecords();
   }, []);
 
