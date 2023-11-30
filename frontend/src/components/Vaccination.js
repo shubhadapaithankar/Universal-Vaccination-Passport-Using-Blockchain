@@ -9,8 +9,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import QRCode from "qrcode.react";
+import { API_URL } from "../apiConfig";
 
-const apiUrl = "http://localhost:3000/vaccination/record/";
+// const apiUrl = "http://localhost:3000/vaccination/record/";
 // Change this to ngrok url
 // const apiUrl = "https://d03a-2607-f380-828-fb00-00-8db9.ngrok.io/vaccination/record/"
 //
@@ -30,8 +31,7 @@ export default function Vaccination() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(unique_id);
-    fetch(apiUrl + unique_id)
+    fetch(`${API_URL}/vaccination/record/${unique_id}`)
       .then((res) => res.json())
       .then((result) => {
         console.log("Vaccination Record is set");
@@ -94,7 +94,7 @@ export default function Vaccination() {
             <Box sx={{ justifyContent: "center", display: "flex" }}>
               <QRCode
                 id="qr-gen"
-                value={apiUrl + unique_id}
+                value={`${window.location.origin}/vaccinationCard/${unique_id}`}
                 size={250}
                 level={"H"}
                 includeMargin={true}

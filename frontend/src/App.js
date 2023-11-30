@@ -7,6 +7,7 @@ import UploadCSV from "./components/UploadCSV";
 import Vaccination from "./components/Vaccination";
 import Admin from "./components/admin/Admin";
 import Chat from "./components/ChatComponent";
+import VaccinationCard from "./components/VaccinationCard";
 
 import backimage from "./images/back.jpg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -52,6 +53,7 @@ function App() {
           <Route path="/uploadCSV" element={<UploadCSV isAuth={isAuth} />} />
           <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/vaccinationCard/:uniqueId" element={<VaccinationCard />} />
           <Route
             path="/viewRecords"
             element={<ViewRecords isAuth={isAuth} />}
