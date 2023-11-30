@@ -105,12 +105,12 @@ export default function Vaccination() {
             <TableContainer component={Paper}>
               <Table className={classes2.table} aria-label="simple table">
                 <TableBody>
-                  <TableRow>
+                  {/* <TableRow>
                     <TableCell component="th" scope="row">
                       Government Id:
                     </TableCell>
                     <TableCell align="left">{vaccinationRecord.id}</TableCell>
-                  </TableRow>
+                  </TableRow> */}
                   <TableRow>
                     <TableCell component="th" scope="row">
                       Name:
