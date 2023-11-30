@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Container, Paper, Button, Box, Grid } from "@material-ui/core";
-
+import { Container, Paper, Button, Box, Grid, Typography } from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -28,14 +27,29 @@ export default function Vaccination() {
   const [unique_id, setUniqueId] = useState("");
   const [vaccinationRecord, setVaccinationRecord] = useState([]);
   const classes = useStyles();
+  const [fetchSuccess, setFetchSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleClick = (e) => {
     e.preventDefault();
+    setFetchSuccess(false);
+    setErrorMessage("");
+
     fetch(`${API_URL}/vaccination/record/${unique_id}`)
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        if (!res.ok) {
+          throw new Error("Failed to fetch vaccination record.");
+        }
+        return res.json();
+      })
       .then((result) => {
         console.log("Vaccination Record is set");
         setVaccinationRecord(result);
+        setFetchSuccess(true);
+      })
+      .catch((error) => {
+        setErrorMessage(error.message || "An error occurred");
       });
   };
 
@@ -75,10 +89,11 @@ export default function Vaccination() {
             </Button>
           </form>
         </Paper>
-
+        {fetchSuccess ? (
         <Paper elevation={3} style={paperStyle}>
           <h1 style={{ color: "black" }}>YOUR VACCINATION PASSPORT</h1>
-          <Paper
+          
+            <Paper
             elevation={6}
             style={{ margin: "10px", padding: "15px", textAlign: "left" }}
             key={vaccinationRecord.id}
@@ -153,7 +168,10 @@ export default function Vaccination() {
               </Table>
             </TableContainer>
           </Paper>
-        </Paper>
+        </Paper> 
+        ) : errorMessage ? (
+            <Typography color="error">{errorMessage}</Typography>
+          ) : null}
       </Grid>
     </Container>
   );
