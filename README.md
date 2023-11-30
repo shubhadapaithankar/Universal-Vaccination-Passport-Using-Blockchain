@@ -34,3 +34,11 @@ Create an account and follow the necessary steps for setup `https://dashboard.ng
 Step:
 1. create lambda function on aws (code is given in code secrion) , use ngrock url in host section
 2. In application side change localhost to the ngrock url
+
+## Team Members:
+
+1. Phillip Nguyen 
+2. Sai Manasa Yadlapalli 
+3. Shubhada Sanjay Paithankar 
+4. Sri Ram Chinta 
+
