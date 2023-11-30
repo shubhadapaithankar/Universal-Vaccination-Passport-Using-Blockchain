@@ -17,9 +17,9 @@ Create an account and follow the necessary steps for setup `https://dashboard.ng
 
 
 ## clone the repo 
-1. To start the backend `cd backend`  `# npm install` 'npm start`
-2. To start frontend `cd frontend` '# npm install` 'npm start`
-3. To start the blockchain 
+1. To start the backend `cd backend`--> `npm install`--> `npm start`
+2. To start frontend `cd frontend`-->`npm install`-->`npm start`
+3. To start the Blockchain 
 
 ```
 # npm install -g truffle
@@ -29,8 +29,8 @@ Create an account and follow the necessary steps for setup `https://dashboard.ng
   ```
 
 
-## If you want to access the QR code or if you want to access the application on web
+## If you want to access the QR code or if you want to access the application on the web
 
 Step:
-1. create lambda function on aws (code is given in code secrion) , use ngrock url in host section
-2. In application side change localhost to the ngrock url
+1. create lambda function on AWS (code is given in code section); use ngrock URL in the host section
+2. On the application side, change localhost to the ngrock URL
