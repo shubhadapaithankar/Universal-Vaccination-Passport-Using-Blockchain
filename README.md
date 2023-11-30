@@ -1,4 +1,4 @@
-# Universal-Vaccination-Passport-Using-Blockchain
+# Universal Vaccination Passport Using Blockchain
 
 The project presents an innovative COVID-19 vaccination Passport System, leveraging cutting-edge technologies like blockchain, AI-driven chatbots, and serverless computing. Designed to manage and verify vaccination records securely, this system combines the robustness of the Ethereum blockchain with the user-friendly interface of React.js and the scalable backend architecture of NodeJS. Our project aims to provide a seamless and secure digital solution for health record management in the context of the COVID-19 pandemic.
 
@@ -16,15 +16,14 @@ Create an account and follow the necessary steps for setup `https://dashboard.ng
 
 
 ## clone the repo 
-1. Start backend `cd backend`  `npm install` 'npm start`
-2. Start front end `cd frontend` 'npm install` 'npm start`
+1. Start backend `cd backend`  `# npm install` 'npm start`
+2. Start front end `cd frontend` '# npm install` 'npm start`
 3. start blockchain 
 
 ```
-npm install -g truffle
-
- truffle complile
-  truffle migrate 
+# npm install -g truffle
+# truffle complile
+# truffle migrate 
   
   ```
 
