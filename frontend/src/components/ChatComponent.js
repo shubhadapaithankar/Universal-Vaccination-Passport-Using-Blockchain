@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ChatComponent.css';
 import { API_URL } from "../apiConfig";
+import { CircularProgress, Container, Paper } from '@mui/material';
 
 const ChatComponent = () => {
     const [userInput, setUserInput] = useState('');
@@ -95,16 +96,24 @@ const ChatComponent = () => {
                                 value={userInput} 
                                 onChange={handleInputChange}
                             />
-                            <button className="btn" type="submit">Submit</button>
+                            <button 
+                            disabled={isLoading} 
+                            style={{
+                            backgroundColor: isLoading ? "#cccccc" : "", 
+                            color: isLoading ? "#666666" : "", }}
+                            className="btn" 
+                            type="submit">
+                            Submit
+                            </button>
                         </div>
                     </form>
+                    
                     {isLoading && (
-                        <div className="loading-indicator">
-                            <div className="spinner-border text-primary" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+                        <CircularProgress />
+                    </div>
                     )}
+
                     {
                         rulesList.length > 0 && (
                             <ul className="list-group rules-list" id="rules-list">
