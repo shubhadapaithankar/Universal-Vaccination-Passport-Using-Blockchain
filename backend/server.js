@@ -62,33 +62,44 @@ app.post('/vaccination/record/:email', async (req, res) => {
 });
 
 app.get('/vaccination/record/:id', async (req, res) => {
-  // res.json({"message": "Vinit"});
 
   let id = req.params.id;
-  let accounts = await web3.eth.getAccounts();
-  const deployed = await vaccinationRecordContract.deployed();
-  console.log("Id passed from the user: " + id)
 
-
-  // const cR = await deployed.createRecord(1, "Shubhada", "11/01/2021", "11/03/2021", "Covaxin", "Vinit", {from: accounts[0]})
-  const cR = await deployed.getRecord(id, { from: accounts[0] })
-  console.log(cR);
-
-
-  if (cR.logs.length != 0) {
-    const resp = {
-      id: cR.logs[0].args.id,
-      name: cR.logs[0].args.name,
-      dateOfFirstDose: cR.logs[0].args.dateOfFirstDose,
-      dateOfSecondDose: cR.logs[0].args.dateOfSecondDose,
-      typeOfVaccine: cR.logs[0].args.typeOfVaccine,
-      email: cR.logs[0].args.email,
-      content: cR.logs[0].args.content
-    }
-    res.json(resp);
-  } else {
-    res.json({ message: "Not Found" })
+  if (!id || isNaN(Number(id))) {
+    return res.status(400).json({ message: "Invalid ID format" });
   }
+
+  try{
+    let accounts = await web3.eth.getAccounts();
+    const deployed = await vaccinationRecordContract.deployed();
+    console.log("Id passed from the user: " + id)
+  
+  
+    // const cR = await deployed.createRecord(1, "Shubhada", "11/01/2021", "11/03/2021", "Covaxin", "Vinit", {from: accounts[0]})
+    const cR = await deployed.getRecord(id, { from: accounts[0] })
+    console.log(cR);
+  
+  
+    if (cR.logs.length != 0) {
+      const resp = {
+        id: cR.logs[0].args.id,
+        name: cR.logs[0].args.name,
+        dateOfFirstDose: cR.logs[0].args.dateOfFirstDose,
+        dateOfSecondDose: cR.logs[0].args.dateOfSecondDose,
+        typeOfVaccine: cR.logs[0].args.typeOfVaccine,
+        email: cR.logs[0].args.email,
+        content: cR.logs[0].args.content
+      }
+      res.json(resp);
+    } else {
+      res.status(404).json({ message: "Not Found" });
+    }
+  }
+  catch (error) {
+    console.error("Error fetching record:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+  
 });
 
 app.get('/vaccination-records/:email', async (req, res) => {
