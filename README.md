@@ -1,6 +1,6 @@
 # Universal Vaccination Passport Using Blockchain
 
-A secure, blockchain-based digital solution for managing and verifying vaccination records, featuring AI-enhanced user support and a scalable serverless architecture
+A secure, blockchain-based digital solution for managing and verifying vaccination records, featuring AI-enhanced user support and a scalable serverless architecture.
  
 
 ![Untitled presentation](https://github.com/shubhadapaithankar/Universal-Vaccination-Passport-Using-Blockchain/assets/99461999/b82a4e16-0c69-49f8-ba65-b3537a8c0321)
@@ -11,7 +11,7 @@ A secure, blockchain-based digital solution for managing and verifying vaccinati
 2. Install Postman ` https://www.postman.com/downloads/`
 3. For network tunneling, install `https://ngrok.com/download` 
 
-  Create an account and follow the necessary steps for setup `https://dashboard.ngrok.com/get-started/setup`
+  Create an account and follow the necessary steps for setup: `https://dashboard.ngrok.com/get-started/setup`
 
 4. Run server on 3000 port ` ngrok http 3000`
 
