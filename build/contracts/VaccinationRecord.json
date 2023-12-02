@@ -6627,12 +6627,12 @@
         }
       },
       "links": {},
-      "address": "0x3885cB000e9100fa695f309a0808F863bDbb6973",
-      "transactionHash": "0xf09fa28f3ea5372d050f9c82217de2209b25282ffdf9a0955668f406c8b6c939"
+      "address": "0xe2DB3D1F363145e0aeE0F7DD4959b8d43dab4BD7",
+      "transactionHash": "0x62415030036b771d928d80c717b87a460ff9f2cd4c0783d01dff83653fc4a27e"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-12-01T23:42:49.737Z",
+  "updatedAt": "2023-12-02T02:12:06.985Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
