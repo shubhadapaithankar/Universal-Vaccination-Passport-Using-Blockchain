@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Container, Paper, Button, Box, Grid, Typography } from "@material-ui/core";
+import {
+  Container,
+  Paper,
+  Button,
+  Box,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -37,7 +44,7 @@ export default function Vaccination() {
 
     fetch(`${API_URL}/vaccination/record/${unique_id}`)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         if (!res.ok) {
           throw new Error("Failed to fetch vaccination record.");
         }
@@ -69,13 +76,20 @@ export default function Vaccination() {
     //   }
     //   )
   }, []);
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      handleClick(e);
+    }
+  };
+
   return (
     <Container style={{ justifyContent: "center", display: "flex" }}>
       <Grid xs={12} sm={8} md={6}>
         <Paper elevation={3} style={paperStyle}>
           <h1 style={{ color: "blue" }}>Enter your unique Government ID</h1>
 
-          <form className={classes.root} noValidate autoComplete="off">
+          <div className={classes.root} noValidate autoComplete="off">
             <TextField
               id="outlined-basic"
               label="Unique Government ID"
@@ -83,95 +97,98 @@ export default function Vaccination() {
               fullWidth
               value={unique_id}
               onChange={(e) => setUniqueId(e.target.value)}
+              onKeyPress={(e) => handleEnterKey(e)}
             />
             <Button variant="contained" color="secondary" onClick={handleClick}>
               Submit
             </Button>
-          </form>
+          </div>
         </Paper>
         {fetchSuccess ? (
-        <Paper elevation={3} style={paperStyle}>
-          <h1 style={{ color: "black" }}>YOUR VACCINATION PASSPORT</h1>
-          
+          <Paper elevation={3} style={paperStyle}>
+            <h1 style={{ color: "black" }}>YOUR VACCINATION PASSPORT</h1>
+
             <Paper
-            elevation={6}
-            style={{ margin: "10px", padding: "15px", textAlign: "left" }}
-            key={vaccinationRecord.id}
-          >
-            {/* Id: {vaccinationRecord.id}<br />
+              elevation={6}
+              style={{ margin: "10px", padding: "15px", textAlign: "left" }}
+              key={vaccinationRecord.id}
+            >
+              {/* Id: {vaccinationRecord.id}<br />
             Name: {vaccinationRecord.name}<br />
             dateOfFirstDose: {vaccinationRecord.dateOfFirstDose} <br />
             dateOfSecondDose:  {vaccinationRecord.dateOfSecondDose} <br />
             typeOfVaccine: {vaccinationRecord.typeOfVaccine} <br />
             content:  {vaccinationRecord.content} <br /> */}
 
-            <br></br>
-            <Box sx={{ justifyContent: "center", display: "flex" }}>
-              <QRCode
-                id="qr-gen"
-                value={`${window.location.origin}/vaccinationCard/${unique_id}`}
-                size={250}
-                level={"H"}
-                includeMargin={true}
-              />
-            </Box>
-            <br></br>
+              <br></br>
+              <Box sx={{ justifyContent: "center", display: "flex" }}>
+                <QRCode
+                  id="qr-gen"
+                  value={`${window.location.origin}/vaccinationCard/${unique_id}`}
+                  size={250}
+                  level={"H"}
+                  includeMargin={true}
+                />
+              </Box>
+              <br></br>
 
-            <TableContainer component={Paper}>
-              <Table className={classes2.table} aria-label="simple table">
-                <TableBody>
-                  {/* <TableRow>
+              <TableContainer component={Paper}>
+                <Table className={classes2.table} aria-label="simple table">
+                  <TableBody>
+                    {/* <TableRow>
                     <TableCell component="th" scope="row">
                       Government Id:
                     </TableCell>
                     <TableCell align="left">{vaccinationRecord.id}</TableCell>
                   </TableRow> */}
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Name:
-                    </TableCell>
-                    <TableCell align="left">{vaccinationRecord.name}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Date of First Dose:
-                    </TableCell>
-                    <TableCell align="left">
-                      {vaccinationRecord.dateOfFirstDose}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Date of Second Dose:
-                    </TableCell>
-                    <TableCell align="left">
-                      {vaccinationRecord.dateOfSecondDose}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Type of Vaccine:
-                    </TableCell>
-                    <TableCell align="left">
-                      {vaccinationRecord.typeOfVaccine}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell component="th" scope="row">
-                      Remarks:
-                    </TableCell>
-                    <TableCell align="left">
-                      {vaccinationRecord.content}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Name:
+                      </TableCell>
+                      <TableCell align="left">
+                        {vaccinationRecord.name}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Date of First Dose:
+                      </TableCell>
+                      <TableCell align="left">
+                        {vaccinationRecord.dateOfFirstDose}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Date of Second Dose:
+                      </TableCell>
+                      <TableCell align="left">
+                        {vaccinationRecord.dateOfSecondDose}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Type of Vaccine:
+                      </TableCell>
+                      <TableCell align="left">
+                        {vaccinationRecord.typeOfVaccine}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        Remarks:
+                      </TableCell>
+                      <TableCell align="left">
+                        {vaccinationRecord.content}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
           </Paper>
-        </Paper> 
         ) : errorMessage ? (
-            <Typography color="error">{errorMessage}</Typography>
-          ) : null}
+          <Typography color="error">{errorMessage}</Typography>
+        ) : null}
       </Grid>
     </Container>
   );

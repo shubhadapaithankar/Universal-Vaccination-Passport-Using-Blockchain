@@ -39,6 +39,12 @@ const HospitalRegistration = ({ setIsAuth }) => {
     }
   };
 
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter" && passwordValid) {
+      onSubmit();
+    }
+  };
+
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} style={{ padding: "20px", margin: "20px auto" }}>
@@ -51,6 +57,7 @@ const HospitalRegistration = ({ setIsAuth }) => {
           style={{ marginBottom: "10px" }}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={(e) => handleEnterKey(e)}
         />
         <TextField
           id="password"
@@ -61,6 +68,7 @@ const HospitalRegistration = ({ setIsAuth }) => {
           style={{ marginBottom: "10px" }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={(e) => handleEnterKey(e)}
         />
         <TextField
           id="passwordAgain"
@@ -71,6 +79,7 @@ const HospitalRegistration = ({ setIsAuth }) => {
           style={{ marginBottom: "10px" }}
           value={passwordAgain}
           onChange={(e) => setPasswordAgain(e.target.value)}
+          onKeyPress={(e) => handleEnterKey(e)}
         />
         <div style={{ textAlign: "start" }}>
           <PasswordChecklist

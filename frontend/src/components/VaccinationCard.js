@@ -29,14 +29,17 @@ const VaccinationCard = () => {
   }
 
   return (
-    <Container style={{ display: "flex", justifyContent: "center" }}>
+    <Container
+      style={{ display: "flex", justifyContent: "center", height: "90vh" }}
+    >
       <Card
         sx={{
           minWidth: 325,
           background: red[500],
           color: "#fff",
           borderRadius: 2,
-          marginTop: "20px",
+          maxHeight: "450px",
+          margin: "auto",
         }}
       >
         <CardContent sx={{ padding: "16px 0px !important" }}>
