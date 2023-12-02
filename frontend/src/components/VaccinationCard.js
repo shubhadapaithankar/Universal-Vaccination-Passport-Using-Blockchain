@@ -34,7 +34,8 @@ const VaccinationCard = () => {
         display: "flex",
         justifyContent: "center",
         height: "100vh",
-        backgroundColor: "#FAF9F6",
+        background:
+          "linear-gradient(-180deg, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%)",
         margin: "0px",
         minWidth: "100%",
       }}
