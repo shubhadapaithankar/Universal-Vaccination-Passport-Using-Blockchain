@@ -29,18 +29,32 @@ const VaccinationCard = () => {
   }
 
   return (
-    <Container style={{ display: "flex", justifyContent: "center" }}>
+    <Container
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        height: "100vh",
+        backgroundColor: "#FAF9F6",
+        margin: "0px",
+        minWidth: "100%",
+      }}
+    >
       <Card
         sx={{
           minWidth: 325,
           background: red[500],
           color: "#fff",
           borderRadius: 2,
-          marginTop: "20px",
+          maxHeight: "75%",
+          margin: "auto",
+          textAlign: "center",
         }}
       >
         <CardContent sx={{ padding: "16px 0px !important" }}>
-          <Typography sx={{ fontSize: 14, marginBottom: "10px" }} gutterBottom>
+          <Typography
+            sx={{ fontSize: "1.4em", marginBottom: "10px" }}
+            gutterBottom
+          >
             Vaccination Card - COVID-19
           </Typography>
           <Divider
@@ -48,7 +62,11 @@ const VaccinationCard = () => {
               backgroundColor: "#fff !important",
             }}
           />
-          <Typography variant="h5" component="h2" sx={{ marginTop: "20px" }}>
+          <Typography
+            variant="h5"
+            component="h2"
+            sx={{ marginTop: "20px", fontSize: "1.4em" }}
+          >
             {vaccinationRecord.name}
           </Typography>
           <Typography sx={{ mb: 1.5 }}>
@@ -63,7 +81,7 @@ const VaccinationCard = () => {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginTop: "30px",
+              marginTop: "5em",
             }}
           >
             <QRCode

@@ -18,18 +18,23 @@ function App() {
   const [isAuth, setIsAuth] = useState(token !== null);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  console.log(window.location.pathname);
+
   return (
     <div
-      className="bg_image"
-      style={{
-        backgroundImage: "url(" + backimage + ")",
-        backgroundSize: "cover",
-        height: "100vh",
-        color: "#f5f5f5",
-        textAlign: "center",
+      style={
+        window.location.pathname.includes("/vaccinationCard")
+          ? {}
+          : {
+              backgroundImage: "url(" + backimage + ")",
+              backgroundSize: "cover",
+              height: "100vh",
+              color: "#f5f5f5",
+              textAlign: "center",
 
-        backgroundRepeat: "no-repeat",
-      }}
+              backgroundRepeat: "no-repeat",
+            }
+      }
     >
       <Router>
         <Appbar
@@ -53,7 +58,10 @@ function App() {
           <Route path="/uploadCSV" element={<UploadCSV isAuth={isAuth} />} />
           <Route path="/admin" element={<Admin isAdmin={isAdmin} />} />
           <Route path="/chat" element={<Chat />} />
-          <Route path="/vaccinationCard/:uniqueId" element={<VaccinationCard />} />
+          <Route
+            path="/vaccinationCard/:uniqueId"
+            element={<VaccinationCard />}
+          />
           <Route
             path="/viewRecords"
             element={<ViewRecords isAuth={isAuth} />}

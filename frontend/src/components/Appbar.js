@@ -19,7 +19,7 @@ import VaccinesIcon from "@mui/icons-material/Vaccines";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import ChatIcon from "@mui/icons-material/Chat";
 import Login from "@mui/icons-material/Login";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { API_URL } from "../apiConfig";
 import ViewListIcon from "@mui/icons-material/ViewList";
@@ -89,6 +89,10 @@ export default function Appbar({ isAuth, setIsAuth, setIsAdmin, isAdmin }) {
       setMenuOpen(false);
     }
   };
+
+  const { pathname } = useLocation();
+
+  if (pathname.includes("/vaccinationCard")) return null;
 
   return (
     <div className={classes.root}>

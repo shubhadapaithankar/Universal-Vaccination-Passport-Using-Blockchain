@@ -43,6 +43,12 @@ const HospitalLogin = ({ setIsAuth, setIsAdmin }) => {
     }
   };
 
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} style={{ padding: "20px", margin: "20px auto" }}>
@@ -56,6 +62,7 @@ const HospitalLogin = ({ setIsAuth, setIsAdmin }) => {
           style={{ marginBottom: "10px", marginTop: "5px" }}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={(e) => handleEnterKey(e)}
         />
         <TextField
           id="password"
@@ -65,6 +72,7 @@ const HospitalLogin = ({ setIsAuth, setIsAdmin }) => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={(e) => handleEnterKey(e)}
         />
         <div
           style={{ marginTop: "10px" }}
